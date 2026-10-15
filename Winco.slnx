@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Winco.App/Winco.App.csproj" />
+  <Project Path="Winco.Core.Tests/Winco.Core.Tests.csproj" />
+  <Project Path="Winco.Core/Winco.Core.csproj" />
+  <Project Path="Winco.Platform/Winco.Platform.csproj" />
+  <Project Path="WincoTestTarget/WincoTestTarget.csproj" />
+</Solution>

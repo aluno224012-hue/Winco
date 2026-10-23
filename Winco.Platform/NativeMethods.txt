@@ -1,0 +1,14 @@
+EnumWindows
+IsWindowVisible
+GetWindow
+GetWindowLongPtr
+GetWindowText
+GetWindowTextLength
+GetClassName
+GetWindowThreadProcessId
+OpenProcess
+QueryFullProcessImageName
+DwmGetWindowAttribute
+DWMWINDOWATTRIBUTE
+CloseHandle
+WINDOW_EX_STYLE

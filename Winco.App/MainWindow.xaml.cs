@@ -8,16 +8,28 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Winco.Platform;
 
 namespace Winco.App;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
+
+/// Interacao logica para MainWindow.xaml
+
 public partial class MainWindow : Window
 {
     public MainWindow()
     {
         InitializeComponent();
+        LoadWindows();
+    }
+
+    private void Refresh_Click(object sender, RoutedEventArgs e)
+    {
+        LoadWindows();
+    }
+
+    private void LoadWindows()
+    {
+        WindowsList.ItemsSource = Wincoenumerador.GetTopLevelWindows();
     }
 }

@@ -12,3 +12,9 @@ DwmGetWindowAttribute
 DWMWINDOWATTRIBUTE
 CloseHandle
 WINDOW_EX_STYLE
+DwmSetWindowAttribute
+DWM_WINDOW_CORNER_PREFERENCE
+DWM_SYSTEMBACKDROP_TYPE
+SetWindowLongPtr
+SetLayeredWindowAttributes
+SetWindowPos

@@ -8,7 +8,7 @@ using Windows.Win32.System.Threading;
 using Windows.Win32.UI.WindowsAndMessaging;
 using Winco.Core.Windows;
 
-public static class WindowEnumerator
+public static class Wincoenumerador
 {
     public static List<WindowInfo> GetTopLevelWindows()
     {
@@ -33,7 +33,7 @@ public static class WindowEnumerator
         };
 
         PInvoke.EnumWindows(callback, 0);
-        GC.KeepAlive(callback); // o delegate tem de viver até o EnumWindows terminar
+        GC.KeepAlive(callback); // o delegate tem de viver ate o EnumWindows terminar
 
         return result;
     }

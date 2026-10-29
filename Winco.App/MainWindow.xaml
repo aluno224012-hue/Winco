@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Winco.App"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Winco" Height="450" Width="800">
     <Grid>
-
+        <DockPanel Margin="12">
+            <Button DockPanel.Dock="Top" Content="Atualizar" Click="Refresh_Click" Margin="0,0,0,8"/>
+            <ListBox x:Name="WindowsList">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <Run Text="{Binding ProcessName}" FontWeight="Bold"/>
+                            <Run Text=" — "/>
+                            <Run Text="{Binding Title}"/>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
     </Grid>
 </Window>

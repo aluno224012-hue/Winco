@@ -67,4 +67,23 @@ public static class DwmStyler
             &value,
             (uint)sizeof(DWM_SYSTEMBACKDROP_TYPE));
     }
+
+    public static unsafe HRESULT SetOpacity(HWND hwnd, byte alpha)
+    {
+        return PInvoke.DwmSetWindowAttribute(
+            hwnd,
+            DWMWINDOWATTRIBUTE.DWMWA_WINDOW_OPACITY,
+            &alpha,
+            sizeof(byte));
+            if (GetWindowLongPtr(hwnd, GWL_EXSTYLE) & WS_EX_LAYERED) != 0)
+            {
+                SetLayeredWindowAttributes(hwnd, 0, alpha, LWA_ALPHA);
+            }
+            else
+            {
+                SetWindowLongPtr(hwnd, GWL_EXSTYLE, GetWindowLongPtr(hwnd, GWL_EXSTYLE) | WS_EX_LAYERED);
+                SetLayeredWindowAttributes(hwnd, 0, alpha, LWA_ALPHA);
+            }
+    }
+
 }

@@ -9,7 +9,24 @@
     <Grid>
         <DockPanel Margin="12">
             <Button DockPanel.Dock="Top" Content="Atualizar" Click="Refresh_Click" Margin="0,0,0,8"/>
-            <ListBox x:Name="WindowsList">
+ 
+            <!-- Linha de estado: diz qual é a janela selecionada e se o estilo foi aplicado -->
+            <TextBlock x:Name="StatusText" DockPanel.Dock="Bottom" Margin="0,8,0,0"
+                       Text="Nenhuma janela selecionada."/>
+ 
+            <!-- Os botões de estilo ficam todos aqui. Quando o painel está desativado,
+                 todos os botões lá dentro ficam desativados também. -->
+            <StackPanel x:Name="StylePanel" DockPanel.Dock="Right" Width="160" Margin="8,0,0,0"
+                        IsEnabled="False">
+                <Button Content="Modo escuro" Click="Modo_Escuro_Click" Margin="0,0,0,4"/>
+                <Button Content="Cantos retos" Click="Cantos_Retos_Click" Margin="0,0,0,4"/>
+                <Button Content="Borda vermelha" Click="Borda_Vermelha_Click" Margin="0,0,0,4"/>
+                <Button Content="Barra azul" Click="Barra_Azul_Click" Margin="0,0,0,4"/>
+                <Button Content="Repor" Click="Repor_Click" Margin="0,12,0,0"/>
+            </StackPanel>
+ 
+            <!-- Clicar numa linha seleciona a janela (SelectedItem da ListBox) -->
+            <ListBox x:Name="WindowsList" SelectionChanged="WindowsList_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock>
@@ -23,3 +40,4 @@
         </DockPanel>
     </Grid>
 </Window>
+ 

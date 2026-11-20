@@ -1,0 +1,6 @@
+public class JsonNamingPolicy.CamelCases
+{
+    public int SchemaVersion { get; set; } = 1;
+    public Guid ActiveProfileId { get; set; }
+    public List<Profile> Profiles { get; set; } = [];
+}

@@ -16,17 +16,9 @@ public static class Wincoenumerador
 
         WNDENUMPROC callback = (hwnd, _) =>
         {
-            if (IsTopLevelWindow(hwnd))
+            if (IsTopLevelWindow(hwnd) && Describe((nint)hwnd) is WindowInfo info)
             {
-                uint processId = GetProcessId(hwnd);
-                string? processPath = GetProcessPath(processId);
-                result.Add(new WindowInfo(
-                    (nint)hwnd,
-                    GetWindowTitle(hwnd),
-                    GetClassName(hwnd),
-                    processId,
-                    processPath is null ? "?" : Path.GetFileName(processPath),
-                    processPath));
+                result.Add(info);
             }
 
             return true; // TRUE = continuar a enumerar
@@ -36,6 +28,30 @@ public static class Wincoenumerador
         GC.KeepAlive(callback); // o delegate tem de viver ate o EnumWindows terminar
 
         return result;
+    }
+
+    // Junta tudo o que sabemos sobre uma janela num WindowInfo.
+    // Não aplica o filtro de janelas de topo: serve para qualquer HWND.
+    // Devolve null se o handle for nulo. Se o Windows negar acesso ao processo
+    // (ex.: app aberta como administrador), ProcessPath fica null e ProcessName "?".
+    public static WindowInfo? Describe(nint window)
+    {
+        if (window == 0)
+        {
+            return null;
+        }
+
+        var hwnd = (HWND)window;
+        uint processId = GetProcessId(hwnd);
+        string? processPath = GetProcessPath(processId);
+
+        return new WindowInfo(
+            window,
+            GetWindowTitle(hwnd),
+            GetClassName(hwnd),
+            processId,
+            processPath is null ? "?" : Path.GetFileName(processPath),
+            processPath);
     }
 
     internal static bool IsTopLevelWindow(HWND hwnd)

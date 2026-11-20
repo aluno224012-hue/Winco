@@ -54,8 +54,24 @@ public static class DwmStyler
     public static bool SetCaptionTextColor(nint window, uint color) =>
         SetUInt(window, DWMWINDOWATTRIBUTE.DWMWA_TEXT_COLOR, color);
 
-    public static bool SetDarkTitleBar(nint window, bool enabled) =>
-        SetUInt(window, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, enabled ? 1u : 0u);
+    // Algumas janelas só redesenham a barra de título quando a moldura muda,
+    // por isso, depois de mudar o modo escuro, pede-se ao Windows que a redesenhe
+    // (SWP_FRAMECHANGED), sem mexer na posição, no tamanho, na ordem nem no foco.
+    public static bool SetDarkTitleBar(nint window, bool enabled)
+    {
+        bool ok = SetUInt(window, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, enabled ? 1u : 0u);
+        if (ok)
+        {
+            PInvoke.SetWindowPos((HWND)window, HWND.Null, 0, 0, 0, 0,
+                SET_WINDOW_POS_FLAGS.SWP_FRAMECHANGED
+                | SET_WINDOW_POS_FLAGS.SWP_NOMOVE
+                | SET_WINDOW_POS_FLAGS.SWP_NOSIZE
+                | SET_WINDOW_POS_FLAGS.SWP_NOZORDER
+                | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE);
+        }
+
+        return ok;
+    }
 
     // Só funciona no Windows 11 22H2 (build 22621) ou mais recente.
     public static unsafe bool SetBackdrop(nint window, BackdropStyle backdrop)

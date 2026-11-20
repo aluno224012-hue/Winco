@@ -82,8 +82,26 @@ public partial class MainWindow : Window
         ApplyToSelected("Barra azul", handle => DwmStyler.SetCaptionColor(handle, blue));
     }
  
+    private void Texto_Branco_Click(object sender, RoutedEventArgs e)
+    {
+        uint white = ColorConversion.HexToColorRef("#FFFFFF");
+        ApplyToSelected("Texto branco", handle => DwmStyler.SetCaptionTextColor(handle, white));
+    }
+
+    // Só funciona no Windows 11 22H2 (build 22621) ou mais recente.
+    private void Mica_Click(object sender, RoutedEventArgs e)
+    {
+        ApplyToSelected("Mica", handle => DwmStyler.SetBackdrop(handle, BackdropStyle.Mica));
+    }
+
+    // 70% de 255 = 178,5 → 179.
+    private void Opacidade_Click(object sender, RoutedEventArgs e)
+    {
+        ApplyToSelected("Opacidade 70%", handle => DwmStyler.SetOpacity(handle, 179));
+    }
+
     // Volta tudo ao que o Windows usa por omissão.
-    // 0xFFFFFFFF = "cor por omissão" para as cores do DWM.
+    // 0xFFFFFFFF = "cor por omissão" (DWMWA_COLOR_DEFAULT) para as cores do DWM.
     private void Repor_Click(object sender, RoutedEventArgs e)
     {
         const uint DefaultColor = 0xFFFFFFFF;
@@ -92,7 +110,18 @@ public partial class MainWindow : Window
             DwmStyler.SetDarkTitleBar(handle, false)
             & DwmStyler.SetCorners(handle, CornerStyle.Default)
             & DwmStyler.SetBorderColor(handle, DefaultColor)
-            & DwmStyler.SetCaptionColor(handle, DefaultColor));
+            & DwmStyler.SetCaptionColor(handle, DefaultColor)
+            & DwmStyler.SetCaptionTextColor(handle, DefaultColor)
+            & DwmStyler.SetBackdrop(handle, BackdropStyle.Auto)
+            & ResetOpacityIfChanged(handle));
+    }
+
+    // O ResetOpacity devolve false quando nunca mexemos na opacidade desta janela.
+    // Para o Repor isso não é um erro, por isso conta sempre como "correu bem".
+    private static bool ResetOpacityIfChanged(nint handle)
+    {
+        DwmStyler.ResetOpacity(handle);
+        return true;
     }
 }
  

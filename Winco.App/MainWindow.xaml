@@ -22,6 +22,9 @@
                 <Button Content="Cantos retos" Click="Cantos_Retos_Click" Margin="0,0,0,4"/>
                 <Button Content="Borda vermelha" Click="Borda_Vermelha_Click" Margin="0,0,0,4"/>
                 <Button Content="Barra azul" Click="Barra_Azul_Click" Margin="0,0,0,4"/>
+                <Button Content="Texto branco" Click="Texto_Branco_Click" Margin="0,0,0,4"/>
+                <Button Content="Mica" Click="Mica_Click" Margin="0,0,0,4"/>
+                <Button Content="Opacidade 70%" Click="Opacidade_Click" Margin="0,0,0,4"/>
                 <Button Content="Repor" Click="Repor_Click" Margin="0,12,0,0"/>
             </StackPanel>
  
